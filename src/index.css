@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+/* 다크 모드: 클래스 기반이 아니라 시스템 설정 기반 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 기본 리셋 및 타이포 */
+:root {
+  color-scheme: light dark;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}

@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "contract_id": "T04-HN-TREND-BOARD",
+  "contract_version": "1.0.0",
+  "description": "Hacker News 키워드 트렌드 정보판의 데이터 계약. 어떤 데이터를, 어떤 형식으로, 어떤 규칙으로 다루는지 선언한다.",
+
+  "source": {
+    "name": "Hacker News (via Algolia Search API)",
+    "url": "https://hn.algolia.com/api/v1/search_by_date",
+    "license": "Hacker News content is publicly accessible. Algolia Search API is free and requires no API key.",
+    "requires_secret": false,
+    "cors_enabled": true
+  },
+
+  "metric": {
+    "id": "keyword_story_count",
+    "definition": "특정 KST 날짜 하루 동안 생성된 HN 스토리(tags=story) 중, 제목에 키워드가 포함된 스토리 수",
+    "unit": "건",
+    "unit_symbol": "count",
+    "aggregation": "nbHits (Algolia 응답 필드)",
+    "value_type": "integer"
+  },
+
+  "keywords": [
+    {
+      "id": "ai",
+      "query": "AI",
+      "role": "primary",
+      "label": "AI"
+    },
+    {
+      "id": "security",
+      "query": "security",
+      "role": "secondary",
+      "label": "Security"
+    },
+    {
+      "id": "llm",
+      "query": "LLM",
+      "role": "secondary",
+      "label": "LLM"
+    }
+  ],
+
+  "timestamp_rules": {
+    "source_timestamp_field": "created_at",
+    "source_timestamp_format": "ISO 8601 (RFC 3339)",
+    "query_timestamp_field": "queried_at",
+    "query_timestamp_format": "RFC 3339 with timezone offset",
+    "reference_timezone": "Asia/Seoul",
+    "date_key_format": "YYYY-MM-DD (KST)",
+    "note": "출처 시각(원천이 제공)과 조회 시각(정보판이 기록)을 반드시 분리한다."
+  },
+
+  "daily_record": {
+    "key": "date_kst",
+    "key_format": "YYYY-MM-DD",
+    "timezone": "Asia/Seoul",
+    "deduplication": "same_date_key_overwrites",
+    "new_date_creates_new_record": true,
+    "fields": [
+      { "name": "date_kst", "type": "string", "description": "KST 기준 날짜 키" },
+      { "name": "queried_at", "type": "string", "description": "조회 시각 (RFC 3339)" },
+      { "name": "source_url", "type": "string", "description": "호출한 원천 URL" },
+      { "name": "source_observed_at", "type": "string", "description": "원천이 제공한 관측 시각 (해당 날짜의 대표 시각)" },
+      { "name": "values", "type": "object", "description": "키워드별 값 { ai, security, llm }" },
+      { "name": "raw", "type": "object", "description": "원자료 응답 스냅샷" }
+    ]
+  },
+
+  "failure_states": [
+    {
+      "error_code": "slow",
+      "label": "느린 응답",
+      "description": "외부 원천 응답이 임계 시간을 초과",
+      "synthetic_fixture": "T04-FAIL-SLOW"
+    },
+    {
+      "error_code": "auth_rejected",
+      "label": "401/403 거절",
+      "description": "외부 원천이 인증/권한 문제로 거절",
+      "synthetic_fixture": "T04-FAIL-401-403"
+    },
+    {
+      "error_code": "rate_limited",
+      "label": "호출 제한",
+      "description": "외부 원천의 호출 제한 초과",
+      "synthetic_fixture": "T04-FAIL-RATE-LIMIT"
+    },
+    {
+      "error_code": "offline",
+      "label": "오프라인",
+      "description": "네트워크 연결 없음",
+      "synthetic_fixture": "T04-FAIL-OFFLINE"
+    },
+    {
+      "error_code": "schema_changed",
+      "label": "형식 변경",
+      "description": "응답 형식이 계약과 다름",
+      "synthetic_fixture": "T04-FAIL-SCHEMA"
+    }
+  ],
+
+  "recovery": {
+    "asset_id": "T04-RECOVER-D2",
+    "description": "실패 재생 후 복구를 재현하는 합성 asset. 재생 시 상태가 fresh, error_code가 none으로 돌아오고 다음 날짜의 일별 기록이 정확히 1건 추가된다.",
+    "expected_result": {
+      "status": "fresh",
+      "error_code": "none",
+      "daily_records_added": 1
+    }
+  },
+
+  "staleness": {
+    "rule": "마지막 정상값의 date_kst가 현재 KST 날짜보다 이전이면 stale로 표시한다.",
+    "stale_label": "오래된 값",
+    "preserve_last_known_good": true
+  },
+
+  "privacy": {
+    "contains_personal_data": false,
+    "contains_secrets": false,
+    "synthetic_only_in_failures": true
+  }
+}
