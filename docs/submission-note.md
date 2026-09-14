@@ -200,3 +200,27 @@
 - Pre-Flight 해당 항목 통과: em-dash 0, 퍼플 0, 3등분 카드 0, Inter 0, h-screen 0, scroll listener 0
 - 스킬 out-of-scope 경고 감안해 "검증 도구 표면"에 한정 적용
 
+### 2026-09-14 (D1) — 5-8 D1 실제 조회 완료
+
+- `scripts/fetch-daily.mjs` 작성 (Node ESM, 집계 규칙은 src/lib/aggregate.ts와 동일)
+- `package.json`에 `"fetch:daily"` 스크립트 추가
+- `npm run fetch:daily` 실행 결과:
+  - date_kst: 2026-09-14
+  - 총 스토리: 474건
+  - 주 값: 78건 (1위 키워드: ai)
+  - Top 5: ai:78, agent:16, agents:14, open:14, video:13
+- `public/data/2026-09-14.json` 생성
+- `public/data/index.json` 갱신 (1건)
+- 관찰: agent/agents가 별개로 집계됨 (계약서가 형태소 정규화를 정의하지 않음 → 의도된 동작)
+
+### 2026-09-14 (D1) — 세션 마무리
+
+- D1 실제 조회 및 저장 완료 (`public/data/2026-09-14.json`)
+- 화면 로딩 확인 (주 값 78건, 1위 키워드 ai)
+- C10 대조 뷰 3탭 일치 확인
+- C12~C16 실패 5종 각각 다른 error_code 확인
+- C17 마지막 정상값 보존 확인
+- C18 오래된 값 표시 확인
+- C19 복구 재생: fresh 복귀 + 일별 기록 2건 확인
+- Git 커밋·푸시 완료
+- 다음: D2(2026-09-15 KST) 조회 → C22 완성
