@@ -9,11 +9,11 @@
 ### 결과물 URL (필수)
 https://sktassign4-noticeboard-kt7g.vercel.app
 
-<GitHub HTTPS 고정 URL + full commit hash>
+
 
 text
 - ⚠️ D2 완료 후 최종 커밋 해시로 갱신
-- 형식: `https://github.com/<owner>/<repo>/commit/<40자리 또는 64자리 소문자 full commit>`
+- 형식: https://github.com/dyj02056/sktassign4_noticeboard/commit/897cc774133c09b09e53b4a8d03c03758a67b5c2
 
 ---
 
