@@ -7,7 +7,7 @@
 ## 결과물 주소
 
 - **공개 심사 화면**: (https://sktassign4-noticeboard-kt7g.vercel.app)
-- **소스 저장소**: (https://github.com/dyj02056/sktassign4_noticeboard)
+- **소스 저장소**: (https://github.com/dyj02056/sktassign4_noticeboard/commit/19f243c6019d42e17788f1e1dae084e0a2ce3ca1)
 
 ---
 
