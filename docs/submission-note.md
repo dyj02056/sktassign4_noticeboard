@@ -58,8 +58,8 @@
 
 - **배포**: Vercel (정적 빌드, 서버 함수 미사용 → 용량 영향 0)
 - **소스 저장소**: 사용자가 직접 GitHub 저장소 생성·푸시
-- **결과물 URL**: Vercel 배포 URL
-- **소스 URL**: GitHub commit hash 포함 고정 URL
+- **결과물 URL**:(https://sktassign4-noticeboard-kt7g.vercel.app/)
+- **소스 URL**: https://github.com/dyj02056/sktassign4_noticeboard/commit/897cc774133c09b09e53b4a8d03c03758a67b5c2
 
 **Vercel 용량 영향 분석** (사용자 우려 해소):
 | 항목 | 이 프로젝트 사용량 |
