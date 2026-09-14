@@ -1,21 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import type {
-  BoardState,
-  DailyRecord,
-  ErrorCode,
-  Fixture,
-  Status,
-} from '../types';
+import type { BoardState, ErrorCode, Fixture } from '../types';
 import {
   buildDailyRecord,
-  computeDelta,
   isStale,
   loadDailyRecords,
   upsertDailyRecord,
 } from './dailyRecord';
 import { aggregateDay, fetchStoriesForKstDay, HN_ALGOLIA_ENDPOINT } from './hn';
 import {
-  FAILURE_FIXTURES,
   loadFixture,
   makeFailureState,
   makeRecoveryRecord,
