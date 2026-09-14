@@ -224,3 +224,12 @@
 - C19 복구 재생: fresh 복귀 + 일별 기록 2건 확인
 - Git 커밋·푸시 완료
 - 다음: D2(2026-09-15 KST) 조회 → C22 완성
+
+### 2026-09-14 (D1) — 문서 3종 완료
+
+- `docs/submission-checklist.md` 작성 (제출 준비 항목)
+- `docs/structure.md` 작성 (비전공자용 구조·기능 설명)
+- `README.md`에 Vercel 배포 URL 반영
+- Vercel 배포 완료: https://sktassign4-noticeboard-kt7g.vercel.app
+- Vercel 빌드 실패 1회 (unused import TS6133/TS6196) → import 정리 후 재배포 성공
+- 학습: `npm run dev`는 타입 에러를 무시하지만 `npm run build`는 실패시킴 → 커밋 전 build 테스트 필요
