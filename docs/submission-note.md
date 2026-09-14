@@ -233,3 +233,14 @@
 - Vercel 배포 완료: https://sktassign4-noticeboard-kt7g.vercel.app
 - Vercel 빌드 실패 1회 (unused import TS6133/TS6196) → import 정리 후 재배포 성공
 - 학습: `npm run dev`는 타입 에러를 무시하지만 `npm run build`는 실패시킴 → 커밋 전 build 테스트 필요
+
+
+### 2026-09-14 (D1) — AI와 나의 판단 항목 보강
+
+"AI 제안을 따르지 않은 일" 3건 확정 기록:
+1. 고정 키워드(AI/security/LLM) → 동적 Top 5 집계
+   - 사유: "왜 이 3개인가"의 근거 약함, "IT 최신 근황"과 부정합
+2. `public-contract.json` 위치: 루트 → `public/`
+   - 사유: 심사자가 URL로 받아 SHA-256 검증하려면 `public/`이 자연스러움
+3. 초기 후보 OSV.dev/NVD → Hacker News Algolia
+   - 사유: 변동성이 눈에 잘 보이는 값이 필요하다는 판단
