@@ -6,8 +6,8 @@
 
 ## 결과물 주소
 
-- **공개 심사 화면**: `<Vercel 배포 URL>` (배포 후 채움)
-- **소스 저장소**: `<GitHub 저장소 URL>` (커밋 후 채움)
+- **공개 심사 화면**: (https://sktassign4-noticeboard-kt7g.vercel.app)
+- **소스 저장소**: (https://github.com/dyj02056/sktassign4_noticeboard)
 
 ---
 
