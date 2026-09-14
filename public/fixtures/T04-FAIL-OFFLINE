@@ -1,0 +1,10 @@
+{
+  "fixture_id": "T04-FAIL-OFFLINE",
+  "synthetic": true,
+  "scenario": "offline",
+  "error_code": "offline",
+  "label": "오프라인",
+  "description": "네트워크 연결이 없는 상황을 재현하는 합성 시험값.",
+  "navigator_online": false,
+  "note": "이 파일의 값은 모두 합성이며 실제 Hacker News 데이터가 아니다."
+}

@@ -1,0 +1,24 @@
+{
+  "fixture_id": "T04-RECOVER-D2",
+  "synthetic": true,
+  "scenario": "recovery",
+  "error_code": "none",
+  "label": "복구",
+  "description": "실패 재생 후 정상 복구를 재현하는 합성 asset. 재생 시 상태가 fresh로, error_code가 none으로 돌아오고 다음 날짜의 일별 기록이 정확히 1건 추가된다.",
+  "expected_result": {
+    "status": "fresh",
+    "error_code": "none",
+    "daily_records_added": 1
+  },
+  "recovery_top_keywords": [
+    { "keyword": "ai", "count": 12 },
+    { "keyword": "model", "count": 9 },
+    { "keyword": "rust", "count": 7 },
+    { "keyword": "security", "count": 6 },
+    { "keyword": "browser", "count": 5 }
+  ],
+  "primary_keyword": "ai",
+  "primary_count": 12,
+  "target_date_kst": "2026-09-15",
+  "note": "이 파일의 값은 모두 합성이며 실제 Hacker News 데이터가 아니다. target_date_kst는 합성 시계 주입용이다."
+}

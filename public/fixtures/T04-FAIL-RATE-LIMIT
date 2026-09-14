@@ -1,0 +1,11 @@
+{
+  "fixture_id": "T04-FAIL-RATE-LIMIT",
+  "synthetic": true,
+  "scenario": "rate_limited",
+  "error_code": "rate_limited",
+  "label": "호출 제한",
+  "description": "외부 원천의 호출 제한을 초과한 상황을 재현하는 합성 시험값.",
+  "http_status": 429,
+  "retry_after_seconds": 60,
+  "note": "이 파일의 값은 모두 합성이며 실제 Hacker News 데이터가 아니다."
+}

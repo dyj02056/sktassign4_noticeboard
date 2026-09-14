@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "contract_id": "T04-HN-TREND-BOARD",
-  "contract_version": "1.0.0",
+  "contract_version": "2.0.0",
   "description": "Hacker News 키워드 트렌드 정보판의 데이터 계약. 어떤 데이터를, 어떤 형식으로, 어떤 규칙으로 다루는지 선언한다.",
 
   "source": {
@@ -13,34 +13,59 @@
   },
 
   "metric": {
-    "id": "keyword_story_count",
-    "definition": "특정 KST 날짜 하루 동안 생성된 HN 스토리(tags=story) 중, 제목에 키워드가 포함된 스토리 수",
+    "id": "top_keyword_count",
+    "definition": "특정 KST 날짜 하루 동안 생성된 HN 스토리(tags=story)의 제목을 토큰화·집계하여, 가장 많이 등장한 키워드 1위의 출현 횟수",
     "unit": "건",
     "unit_symbol": "count",
-    "aggregation": "nbHits (Algolia 응답 필드)",
-    "value_type": "integer"
+    "value_type": "integer",
+    "primary_value": "오늘 1위 키워드의 출현 횟수",
+    "secondary_values": "Top 2~5 키워드와 각 출현 횟수"
   },
 
-  "keywords": [
-    {
-      "id": "ai",
-      "query": "AI",
-      "role": "primary",
-      "label": "AI"
-    },
-    {
-      "id": "security",
-      "query": "security",
-      "role": "secondary",
-      "label": "Security"
-    },
-    {
-      "id": "llm",
-      "query": "LLM",
-      "role": "secondary",
-      "label": "LLM"
-    }
-  ],
+  "aggregation_rules": {
+    "input": "HN Algolia 응답의 hits[].title (스토리 제목)",
+    "steps": [
+      {
+        "step": 1,
+        "name": "lowercase",
+        "description": "제목을 모두 소문자로 변환"
+      },
+      {
+        "step": 2,
+        "name": "tokenize",
+        "description": "영숫자가 아닌 문자를 구분자로 하여 단어 단위로 분리"
+      },
+      {
+        "step": 3,
+        "name": "remove_stopwords",
+        "description": "표준 영어 불용어 및 HN 특유 불용어를 제거",
+        "stopwords_standard": ["the", "a", "an", "and", "or", "but", "of", "to", "in", "on", "at", "for", "with", "is", "are", "was", "were", "be", "been", "being", "it", "its", "this", "that", "these", "those", "as", "by", "from", "into", "about", "over", "after", "before", "you", "your", "we", "our", "they", "their", "he", "she", "his", "her", "i", "my", "me", "how", "what", "why", "when", "where", "who", "which", "will", "would", "can", "could", "should", "may", "might", "must", "do", "does", "did", "not", "no", "yes", "so", "if", "then", "than", "there", "here", "all", "any", "some", "more", "most", "other", "such", "only", "own", "same", "too", "very", "just", "now", "also"],
+        "stopwords_hn_specific": ["show", "ask", "hn", "hacker", "news", "new", "using", "use", "used", "via", "vs", "get", "got", "make", "made", "one", "two", "first", "last", "best", "top", "good", "bad", "big", "small"]
+      },
+      {
+        "step": 4,
+        "name": "min_length",
+        "description": "길이가 2 미만인 토큰 제거"
+      },
+      {
+        "step": 5,
+        "name": "count",
+        "description": "각 토큰의 출현 횟수를 센다"
+      },
+      {
+        "step": 6,
+        "name": "sort",
+        "description": "출현 횟수 내림차순, 동률이면 토큰 사전순 오름차순으로 정렬"
+      },
+      {
+        "step": 7,
+        "name": "top_n",
+        "description": "상위 5개를 취한다 (Top 5)"
+      }
+    ],
+    "top_n": 5,
+    "note": "이 규칙은 고정이며, 심사자가 원자료로부터 화면값을 재계산할 수 있어야 한다."
+  },
 
   "timestamp_rules": {
     "source_timestamp_field": "created_at",
@@ -63,7 +88,9 @@
       { "name": "queried_at", "type": "string", "description": "조회 시각 (RFC 3339)" },
       { "name": "source_url", "type": "string", "description": "호출한 원천 URL" },
       { "name": "source_observed_at", "type": "string", "description": "원천이 제공한 관측 시각 (해당 날짜의 대표 시각)" },
-      { "name": "values", "type": "object", "description": "키워드별 값 { ai, security, llm }" },
+      { "name": "primary_keyword", "type": "string", "description": "오늘 1위 키워드" },
+      { "name": "primary_count", "type": "integer", "description": "오늘 1위 키워드의 출현 횟수 (주 값)" },
+      { "name": "top_keywords", "type": "array", "description": "Top 5 키워드와 각 출현 횟수 [{ keyword, count }]" },
       { "name": "raw", "type": "object", "description": "원자료 응답 스냅샷" }
     ]
   },

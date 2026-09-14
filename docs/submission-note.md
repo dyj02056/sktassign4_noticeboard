@@ -138,3 +138,65 @@
 - `src/index.css`: `@import "tailwindcss";` + 기본 리셋 + `color-scheme` 설정
 - `index.html`: 타이틀 변경
 - `src/App.tsx`: 임시 확인 화면으로 교체 → Tailwind v4 정상 연결 확인
+
+### 2026-09-14 (D1) — 4-2 완료
+
+- `public/fixtures/` 폴더에 fixture 6종 생성 (확장자 없음, JSON 내용)
+  - `T04-FAIL-SLOW` (C12, 느린 응답)
+  - `T04-FAIL-401-403` (C13, 401/403 거절)
+  - `T04-FAIL-RATE-LIMIT` (C14, 호출 제한)
+  - `T04-FAIL-OFFLINE` (C15, 오프라인)
+  - `T04-FAIL-SCHEMA` (C16, 형식 변경)
+  - `T04-RECOVER-D2` (C19, 복구)
+- 모든 fixture에 `"synthetic": true` 명시 → C26 충족
+- 시행착오: Windows 메모장이 `.txt`를 자동으로 붙이는 문제 → VS Code로 저장하여 확장자 없이 생성
+
+### 2026-09-14 (D1) — 4-3 완료
+
+- `public/asset-manifest.json` 생성
+- fixture 6종 SHA-256 확정 (PowerShell `Get-FileHash` 사용)
+- 각 해시를 `assets[].sha256`에 박음
+- 심사자 검증 명령어 (`verify_instructions`) 포함
+- 배포 시 `/asset-manifest.json`으로 URL 접근 가능
+
+### 2026-09-14 (D1) — 주제 변경: 고정 키워드 → 동적 Top 5
+
+**변경 사유**: "AI, security, LLM" 3개 고정은 (1) "왜 이 3개인가"의 근거가 약하고 (2) "IT 최신 근황"을 표방하면서 고정 키워드는 그 자체가 최신이 아님.
+
+**변경 내용**:
+- 고정 키워드 3종 → **동적 Top 5 키워드** (HN 스토리 제목에서 매일 집계)
+- 주 값 = 오늘 1위 키워드의 출현 횟수
+- 보조 값 = Top 2~5 키워드와 각 출현 횟수
+- 집계 규칙(소문자화 + 불용어 제거 + 빈도순 정렬)을 `public-contract.json`에 명시
+
+**`pass_condition.md` 주제 대조 결과**: 주제에서 빗나가지 않음. 오히려 "실제로 변하는 값"과 "어제 대비 변화"에 더 부합. "값 하나" 요구는 "주 값 1개 + 보조 값"으로 충족.
+
+**수정 대상 파일**:
+- `public-contract.json` (keywords → aggregation_rules)
+- `T04-RECOVER-D2` (recovery_values → Top 5 기반)
+- `asset-manifest.json` (T04-RECOVER-D2 SHA-256 재계산)
+- `README.md` (값 정의 수정)
+
+### 2026-09-14 (D1) — fixture 수정 및 매니페스트 갱신
+
+- `T04-RECOVER-D2` 수정: `recovery_values`(고정 키워드) → `recovery_top_keywords`(Top 5 구조) + `primary_keyword`, `primary_count`
+- 나머지 5종 fixture는 그대로 유지 (키워드 무관, 실패 시나리오만 기술)
+- `asset-manifest.json`의 `T04-RECOVER-D2.sha256` 갱신:
+  - 기존: `76C37A300EE09FD19F77F534C834757BA98377D41B8377B78778E42C5C7F8ED6`
+  - 신규: `4DDB842DE51AEAB280229344FA17C7195BBC419E8D6F402595720F2C4957DCA6`
+
+### 2026-09-14 (D1) — README 갱신
+
+- `README.md` 수정: 고정 키워드(AI/security/LLM) → 동적 Top 5 집계 설명으로 교체
+- 집계 규칙 7단계 README에 요약 반영
+- 주 값/보조 값 정의 갱신
+- AI와 나의 판단 항목에 "고정 키워드 → 동적 Top 5 변경 결정" 추가
+
+### 2026-09-14 (D1) — 5-7 taste-skill 적용 완료
+
+- `src/index.css` 교체: 형태 토큰(카드 8px / 컨트롤 6px / 필 full), accent 1개(blue), tabular-nums, 최소 트랜지션
+- `src/App.tsx` 페이지 배경 `bg-zinc-50` → `bg-zinc-100` (카드 대비 강화)
+- 라이트/다크 양쪽 확인
+- Pre-Flight 해당 항목 통과: em-dash 0, 퍼플 0, 3등분 카드 0, Inter 0, h-screen 0, scroll listener 0
+- 스킬 out-of-scope 경고 감안해 "검증 도구 표면"에 한정 적용
+

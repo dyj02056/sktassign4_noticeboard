@@ -1,0 +1,58 @@
+{
+  "manifest_id": "T04-ASSET-MANIFEST",
+  "manifest_version": "1.0.0",
+  "generated_at": "2026-09-14T00:00:00+09:00",
+  "hash_algorithm": "sha256",
+  "description": "오늘의 진짜 정보판(과제 04)의 공개 asset 목록과 SHA-256 해시. 심사자는 각 파일을 내려받아 해시를 재계산해 무결성을 검증한다.",
+
+  "assets": [
+    {
+      "id": "T04-FAIL-SLOW",
+      "path": "/fixtures/T04-FAIL-SLOW",
+      "sha256": "216CBEB7CB018EEBC3BE8630AB6E5326B4FA9E2BA32FE46342CEDFB1D7E66093",
+      "purpose": "느린 응답 실패 재생 (C12)",
+      "synthetic": true
+    },
+    {
+      "id": "T04-FAIL-401-403",
+      "path": "/fixtures/T04-FAIL-401-403",
+      "sha256": "74DEAA66CF5B816A801404F7E2935A6D06D1E97892D4A790600CD14F21018DAF",
+      "purpose": "401/403 거절 실패 재생 (C13)",
+      "synthetic": true
+    },
+    {
+      "id": "T04-FAIL-RATE-LIMIT",
+      "path": "/fixtures/T04-FAIL-RATE-LIMIT",
+      "sha256": "1062D76ED43083E513E745781B45762A0811440001F8E2B814E93F62098FFB68",
+      "purpose": "호출 제한 실패 재생 (C14)",
+      "synthetic": true
+    },
+    {
+      "id": "T04-FAIL-OFFLINE",
+      "path": "/fixtures/T04-FAIL-OFFLINE",
+      "sha256": "A85E0F3B285C7AA790705A1EF4090DD26FF95E10B31A895FE6AC708CDC08EEAF",
+      "purpose": "오프라인 실패 재생 (C15)",
+      "synthetic": true
+    },
+    {
+      "id": "T04-FAIL-SCHEMA",
+      "path": "/fixtures/T04-FAIL-SCHEMA",
+      "sha256": "CC40F4283416F89F5BBEF298DDE31B343A9D2ADBED4833689A188A2B62E2B30E",
+      "purpose": "형식 변경 실패 재생 (C16)",
+      "synthetic": true
+    },
+    {
+      "id": "T04-RECOVER-D2",
+      "path": "/fixtures/T04-RECOVER-D2",
+      "sha256": "4DDB842DE51AEAB280229344FA17C7195BBC419E8D6F402595720F2C4957DCA6",
+      "purpose": "복구 재생 (C19)",
+      "synthetic": true
+    }
+  ],
+
+  "verify_instructions": {
+    "windows": "Get-FileHash -Algorithm SHA256 <파일경로>",
+    "mac_linux": "shasum -a 256 <파일경로>",
+    "note": "다운로드한 파일의 SHA-256이 위 assets[].sha256과 일치하면 무결성이 검증된 것이다."
+  }
+}
