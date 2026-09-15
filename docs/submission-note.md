@@ -244,3 +244,18 @@
    - 사유: 심사자가 URL로 받아 SHA-256 검증하려면 `public/`이 자연스러움
 3. 초기 후보 OSV.dev/NVD → Hacker News Algolia
    - 사유: 변동성이 눈에 잘 보이는 값이 필요하다는 판단
+
+### 2026-09-15 (D2) — 세션 완료
+
+- KST 2026-09-15 오전 8:46 기준 D2 조회 실행
+- `npm run fetch:daily` → `public/data/2026-09-15.json` 생성
+- 결과: 주 값 94건 (1위 키워드: ai), 어제 대비 +16건
+- `public/data/index.json` 2건으로 갱신
+- 화면에서 어제 대비 변화 +16건 표시 확인 (C24)
+- `npm run build` 성공
+- 커밋·푸시 → Vercel 재배포 완료
+- C22, C23, C24 모두 충족
+- `submission-checklist.md` 최종 갱신 (C22~C24 ✅)
+- 소스 저장소 URL에 최종 커밋 해시 반영
+
+**과제 04의 28개 통과 기준(C01~C28) 전부 충족.**
